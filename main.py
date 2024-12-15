@@ -17,17 +17,18 @@ if st.button("Convert"):
     if file_to_convert_in_md is None:
         col1.warning("Please upload a file first.")
     else:
-        markitdown = MarkItDown()
-        result = markitdown.convert_stream(file_to_convert_in_md)
-        col1.success("File converted successfully.")
-        with st.container(border=True):
-            st.subheader("Preview of the first 1000 characters")
-            st.write(result.text_content[:1000] + "...")
+        with st.spinner("Converting file to markdown..."):
+            markitdown = MarkItDown()
+            result = markitdown.convert_stream(file_to_convert_in_md)
+            col1.success("File converted successfully.")
+            with st.container(border=True):
+                st.subheader("Preview of the first 1000 characters")
+                st.write(result.text_content[:1000] + "...")
 
-        st.subheader("Download Markdown File")
-        st.download_button(
-            label="Download",
-            data=result.text_content,
-            file_name=f"{file_to_convert_in_md.name}.md",
-            mime="text/markdown",
-        )
+            st.subheader("Download Markdown File")
+            st.download_button(
+                label="Download",
+                data=result.text_content,
+                file_name=f"{file_to_convert_in_md.name}.md",
+                mime="text/markdown",
+            )
